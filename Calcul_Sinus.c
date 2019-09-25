@@ -8,6 +8,8 @@ Description: Fonction qui calcule le sinus
 
 #include <stdio.h>
 #define PI 3.14159265358979323846
+#define nbTermes 10
+
 int factorielle(int facto)
 {
 	int retour_fac = 1;
@@ -34,7 +36,7 @@ float sinus(int val_sin)
 	float retour_sin = 0;
 	int n = 0;
 	
-	for(int i = 1 ; i < 10; i += 2)
+	for(int i = 1 ; i <= nbTermes; i += 2)
 	{
 		retour_sin += (puissance(val_sin,i)/ factorielle(i)) * puissance(-1,n);
 		n++;
