@@ -1,7 +1,7 @@
 /********
 Fichier: Recherche_Caractere.c
 Auteurs: Juan Manuel Gallego galj1704
-Jean-Philippe Lemay lemjXXXX 
+Jean-Philippe Lemay lemj0601
 Date: 25 septembre 2019
 Description: Fonction qui recherche un caractère dans une liste de caractères
 ********/
