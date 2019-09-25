@@ -47,7 +47,7 @@ float sinus(int val_sin)
 int main(int argc, char **argv)
 {
 	float val;
-	printf("Quelle est la valeur du sin a calculer? (en radiants)\n");
+	printf("Quelle est la valeur du sin a calculer? (en radians)\n");
 	scanf("%f",&val);
 	while(val > 2*PI)
 	{
