@@ -10,16 +10,16 @@ Description: Fonction qui calcule le sinus
 #define PI 3.14159265358979323846
 #define nbTermes 10
 
-int factorielle (int n)
+int factorielle(int facto)
 {
-	if ( n == 1 )
+	int retour_fac = 1;
+
+	while(facto >= 2)
 	{
-		return 1;
+		retour_fac *= facto;
+		facto--; 
 	}
-	else
-	{
-		return (n * factorielle(n-1));
-	}
+	return retour_fac;
 }
 
 float puissance(float base, int exp)

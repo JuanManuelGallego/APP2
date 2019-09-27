@@ -31,7 +31,7 @@ int palindrome (char *mot)
 	int resultat = 1; //0 si le mot n'est pas un palindrome, 1 si oui
 	int nbLettres=0; 
 	int nbComparaisons;
-	char caractere = mot[0]; // Variable tempon pour compter le nombre de lettres
+	char caractere = mot[0]; // Variable tampon pour compter le nombre de lettres
 	
 	// Déterminer le nombre de lettres
 	while (caractere !='\0')

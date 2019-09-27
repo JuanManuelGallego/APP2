@@ -46,7 +46,6 @@ void multiplicationMatrices (int matriceA[][N], int matriceB[][N], int matriceR[
 				matriceR[i][j] += matriceA[i][k] * matriceB[k][j] ;
 			}
 			
-			
 		}
 	}
 }
