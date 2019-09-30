@@ -15,6 +15,10 @@ void multiplicationMatrices (int matriceA[][N], int matriceB[][N], int matriceR[
 
 int main(int argc, char **argv)
 {
+	printf("==================================================================================\n");
+	printf("Plan de test\n");
+	printf("    Matrice A                       Matrice B                       Resultat\n");
+
 	int mA[N][N] = {{1,2,3},{4,5,6},{7,8,9}};
 	int mB[N][N] = {{1,1,1},{2,2,2},{3,3,3}};
 	int mR[N][N];
@@ -25,10 +29,52 @@ int main(int argc, char **argv)
 	{
 		for (int j=0; j<N; j++)
 		{
+			printf("%d\t",mA[i][j]);
+		}
+		printf("\t");
+		for (int j=0; j<N; j++)
+		{
+			printf("%d\t",mB[i][j]);
+		}
+		printf("\t");
+		for (int j=0; j<N; j++)
+		{
 			printf("%d\t",mR[i][j]);
 		}
-		printf("\n");
+		printf("\n\n");
 	}
+	
+	printf("    Matrice C                       Matrice D                       Resultat\n");
+	
+	int mCT[N][N] = {{-1,-2,-3},{0,0,0},{7,8,9}};
+	int mDT[N][N] = {{5,10,18},{99,56,45},{-58,-48,3}};
+	
+	multiplicationMatrices(mCT, mDT, mR);
+	
+	for (int i=0; i<N; i++)
+	{
+		for (int j=0; j<N; j++)
+		{
+			printf("%d\t",mCT[i][j]);
+		}
+				printf("\t");
+
+		for (int j=0; j<N; j++)
+		{
+			printf("%d\t",mDT[i][j]);
+		}
+				printf("\t");
+
+		for (int j=0; j<N; j++)
+		{
+			printf("%d\t",mR[i][j]);
+		}
+		printf("\n\n");
+	}
+
+
+	printf("==================================================================================\n");
+
 	
 	return 0;
 }

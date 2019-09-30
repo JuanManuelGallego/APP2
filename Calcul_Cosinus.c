@@ -8,7 +8,7 @@ Description: Fonction qui calcule le sinus
 
 #include <stdio.h>
 #define PI 3.14159265358979323846
-#define nbTermes 10
+#define nbTermes 5
 
 int factorielle(int facto)
 {
@@ -32,12 +32,12 @@ float puissance(float base, int exp)
 	return retour_pui;
 }
 
-float cosinus(int val_cosin)
+float cosinus(float val_cosin)
 {
 	float retour_cosin = 1;
 	int n = 0;
 	
-	for(int i = 2 ; i < nbTermes; i += 2)
+	for(int i = 2 ; i < nbTermes*2; i += 2)
 	{
 		retour_cosin += (puissance(val_cosin,i)/ factorielle(i)) * puissance(-1,n+1);
 		n++;
@@ -47,6 +47,15 @@ float cosinus(int val_cosin)
 
 int main(int argc, char **argv)
 {
+	printf("=============================================================\n");
+	printf("Plan de test\n");
+	printf("Valeur  Resultat\n");
+	printf("0.5       %0.4f\n",cosinus(0.5));
+	printf("1         %0.4f\n",cosinus(1));
+	printf("0         %0.0f\n",cosinus(0));
+	printf("PI/6      %0.4f\n",cosinus(PI/6));
+	printf("=============================================================\n");
+/*
 	float val;
 	printf("Quelle est la valeur du cosinus a calculer? (en radians)\n");
 	scanf("%f",&val);
@@ -58,7 +67,7 @@ int main(int argc, char **argv)
 	
 	printf("Le cosinus est de %f ", cosinus(val));
 	
-	
+*/
 	return 0;
 }
 

@@ -12,6 +12,15 @@ int palindrome (char *mot);
 
 int main()
 {
+	printf("================================\n");
+	printf("Plan de test\n");
+	printf("Mot   Resultat\n");
+	printf("kayak    %d\n",palindrome("kayak"));
+	printf("allo     %d\n",palindrome("allo"));
+	printf("civic    %d\n",palindrome("civic"));
+	printf("radar    %d\n",palindrome("radar"));
+	printf("=================================\n");
+/*
 	char motATester[] = "kayak";
 
 	if(palindrome(motATester))
@@ -22,7 +31,7 @@ int main()
 	{
 		printf("NON");
 	}
-		
+*/
 	return 0;
 }
 

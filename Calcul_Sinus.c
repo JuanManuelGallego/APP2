@@ -8,7 +8,7 @@ Description: Fonction qui calcule le sinus
 
 #include <stdio.h>
 #define PI 3.14159265358979323846
-#define nbTermes 10
+#define nbTermes 5
 
 int factorielle(int facto)
 {
@@ -31,12 +31,12 @@ float puissance(float base, int exp)
 	}
 	return retour_pui;
 }
-float sinus(int val_sin)
+float sinus(float val_sin)
 {
 	float retour_sin = 0;
 	int n = 0;
 	
-	for(int i = 1 ; i <= nbTermes; i += 2)
+	for(int i = 1 ; i <= nbTermes*2; i += 2)
 	{
 		retour_sin += (puissance(val_sin,i)/ factorielle(i)) * puissance(-1,n);
 		n++;
@@ -46,6 +46,24 @@ float sinus(int val_sin)
 
 int main(int argc, char **argv)
 {
+	printf("=============================================================\n");
+	printf("Validation\n");
+	printf("Valeur  Resultat\n");
+	printf("1         %0.4f\n",sinus(1));
+	printf("0         %0.0f\n",sinus(0));
+	printf("PI/4      %0.4f\n",sinus(PI/4));
+	printf("PI/2      %0.0f\n",sinus(PI/2));
+	printf("=============================================================\n");
+
+	printf("=============================================================\n");
+	printf("Plan de test\n");
+	printf("Valeur  Resultat\n");
+	printf("0.5       %0.4f\n",sinus(0.5));
+	printf("1         %0.4f\n",sinus(1));
+	printf("0         %0.0f\n",sinus(0));
+	printf("PI/6      %0.1f\n",sinus(PI/6));
+	printf("=============================================================\n");
+/*
 	float val;
 	printf("Quelle est la valeur du sin a calculer? (en radians)\n");
 	scanf("%f",&val);
@@ -57,7 +75,7 @@ int main(int argc, char **argv)
 	
 	printf("Le sinus est de %f ", sinus(val));
 	
-	
+*/	
 	return 0;
 }
 

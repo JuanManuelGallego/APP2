@@ -27,6 +27,25 @@ int recherche(char *phrase, char lettre )
 
 int main(int argc, char **argv)
 {
+	printf("=============================================================\n");
+	printf("Validation\n");
+	printf("Chaine                     Caractere    Resultat\n");
+	printf("anticonstitutionnellement       n           %d\n",recherche("anticonstitutionnellement", 'n'));
+	printf("bonjour                         e          %d\n",recherche("bonjour", 'e'));
+	printf("bonjour                         r           %d\n",recherche("bonjour", 'r'));
+	printf("allocommentcava                 a           %d\n",recherche("allocommentcava", 'a'));
+	printf("=============================================================\n");
+	
+	printf("=============================================================\n");
+	printf("Plan de test\n");
+	printf("Chaine                     Caractere    Resultat\n");
+	printf("allo                            l           %d\n",recherche("allo", 'l'));
+	printf("parametre                       e           %d\n",recherche("parametre", 'e'));
+	printf("olympique                       e           %d\n",recherche("olympique", 'e'));
+	printf("clavier                         j          %d\n",recherche("clavier", 'j'));
+	printf("=============================================================\n");
+
+	/*
 	char lettre;
 	char phrase[100];
 	printf("Veuillez saisir une chaine de caracteres\n");
@@ -37,6 +56,7 @@ int main(int argc, char **argv)
 	scanf("%c",&lettre);
 	
 	printf("Le caractere se trouve a la position %d\n", recherche(phrase, lettre));
+	*/
 }
 
 
