@@ -20,19 +20,18 @@ int main()
     int lignes2, colonnes2;
     int maxval;
     int histogramme[MAX_VALEUR+1] = {0};
-    char nom[MAX_CHAINE] = "C:\\Users\\galj1704\\Documents\\test2.txt";
+    char nom[MAX_CHAINE] = "test2.pgm";
     struct MetaData metadonnees;
 
 	int retour;
 
     printf("-> Debut!\n");
 
-	// exemple d'appel de fonction
+	// LIRE FICHIER
     retour = pgm_lire(nom, image1, 
                       &lignes1, &colonnes1, 
                       &maxval, &metadonnees);
 
-	// exemple detraitement d'un code de retour (erreur ou reussite)
 	printf("-> Retour: ");
 	if (retour == OK)
 		printf("-> OK");
@@ -41,6 +40,36 @@ int main()
 	printf("\n");
 	
 	
+	
+	// TROUVER COULEUR PRÉPONDÉRANTE
+	retour = pgm_couleur_preponderante(image1, lignes1, colonnes1);
+	printf("Couleur prépondérante : %i\n",retour);
+	
+	
+	// CRÉER HISTOGRAME
+	retour = pgm_creer_histogramme(image1, lignes1, colonnes1, histogramme);
+	
+	for (int i=1; i <= maxval ; i++)
+	{
+		printf("%i : %i\n",i,histogramme[i]);
+	}
+	
+	// ÉLCAIRCIR OU NORCIR
+
+	//retour = pgm_eclaircir_noircir(image1,lignes1, colonnes1, maxval, -2);
+	
+	
+
+	
+	retour = pgm_extraire(image1, 1, 1, 2, 1, &lignes1, &colonnes1);
+	printf("-> Retour: ");
+	if (retour == OK)
+		printf("-> OK");
+	else
+		printf("-> ERREUR");
+	printf("\n");
+	
+	// COPIER IMAGE
 	retour = pgm_copier(image1, lignes1, colonnes1, image2, &lignes2, &colonnes2);
 	printf("-> Retour: ");
 	if (retour == OK)
@@ -49,9 +78,33 @@ int main()
 		printf("-> ERREUR");
 	printf("\n");
 	
+	// CRÉER LE NÉGATIF
+	/*retour = pgm_creer_negatif(image1,lignes1, colonnes1, maxval);
+	printf("-> Retour (Créer le négatif) : ");
+	if (retour == OK)
+		printf("-> OK");
+	else
+		printf("-> ERREUR");
+	printf("\n");*/
 
-	// autre exemple d'appel de fonction
-	char nom2[MAX_CHAINE] = "C:\\Users\\galj1704\\Documents\\test.txt";
+	// PIVOTER
+	//retour = pgm_pivoter90(image2, &lignes2, &colonnes2,0);
+	
+	
+	
+	// SONT IDENTIQUES ?
+	retour = pgm_sont_identiques(image1, lignes1, colonnes1, image2, lignes2, colonnes2);
+	
+	printf("-> Retour (identiques) : ");
+	if (retour == 0)
+		printf("-> INDENTIQUES");
+	else
+		printf("-> DIFFÉRENTES");
+	printf("\n");
+	
+
+	// ERCIRE FICHIER
+	char nom2[MAX_CHAINE] = "test.pgm";
     pgm_ecrire(nom2, image2, 
                lignes2, colonnes2, 
                maxval, metadonnees);            
