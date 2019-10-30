@@ -8,6 +8,7 @@ Description: Fichier de distribution pour GEN145.
 
 #include <stdio.h>
 #include "bibliotheque_images.h"
+#include "AutoValidation.h"
 
 int image1[MAX_HAUTEUR][MAX_LARGEUR];
 int image2[MAX_HAUTEUR][MAX_LARGEUR];
@@ -16,31 +17,40 @@ struct RGB imageRGB2[MAX_HAUTEUR][MAX_LARGEUR];
 
 int main()
 {
+	AutoValidation();
+	
+	
+	
+	
+	/*
     int lignes1, colonnes1;
     int lignes2, colonnes2;
     int maxval;
     int histogramme[MAX_VALEUR+1] = {0};
-    char nom[MAX_CHAINE] = "test2.pgm";
+    char nom[MAX_CHAINE] = "test3.ppm";
     struct MetaData metadonnees;
 
 	int retour;
 
     printf("-> Debut!\n");
-
+    // LIRE FICHIER (PPM)
+    retour = ppm_lire(nom, imageRGB1, 
+                      &lignes1, &colonnes1, 
+                      &maxval, &metadonnees);
+	printf("-> Retour (LECTURE PPM): ");
+	if (retour == OK) printf("-> OK");
+	else printf("-> ERREUR");
+	printf("\n");
+/*
 	// LIRE FICHIER
     retour = pgm_lire(nom, image1, 
                       &lignes1, &colonnes1, 
                       &maxval, &metadonnees);
-
-	printf("-> Retour: ");
-	if (retour == OK)
-		printf("-> OK");
-	else
-		printf("-> ERREUR");
+	printf("-> Retour (LECTURE): ");
+	if (retour == OK) printf("-> OK");
+	else printf("-> ERREUR");
 	printf("\n");
-	
-	
-	
+
 	// TROUVER COULEUR PRÉPONDÉRANTE
 	retour = pgm_couleur_preponderante(image1, lignes1, colonnes1);
 	printf("Couleur prépondérante : %i\n",retour);
@@ -48,58 +58,45 @@ int main()
 	
 	// CRÉER HISTOGRAME
 	retour = pgm_creer_histogramme(image1, lignes1, colonnes1, histogramme);
-	
 	for (int i=1; i <= maxval ; i++)
 	{
 		printf("%i : %i\n",i,histogramme[i]);
 	}
 	
 	// ÉLCAIRCIR OU NORCIR
-
-	//retour = pgm_eclaircir_noircir(image1,lignes1, colonnes1, maxval, -2);
-	
-	
-
-	
-	retour = pgm_extraire(image1, 1, 1, 2, 1, &lignes1, &colonnes1);
-	printf("-> Retour: ");
-	if (retour == OK)
-		printf("-> OK");
-	else
-		printf("-> ERREUR");
+	retour = pgm_eclaircir_noircir(image1,lignes1, colonnes1, maxval, -2);
+		retour = pgm_extraire(image1, 1, 1, 2, 1, &lignes1, &colonnes1);
+	printf("-> Retour (Éclaircir/noircir : ");
+	if (retour == OK) printf("-> OK");
+	else printf("-> ERREUR");
 	printf("\n");
 	
 	// COPIER IMAGE
 	retour = pgm_copier(image1, lignes1, colonnes1, image2, &lignes2, &colonnes2);
-	printf("-> Retour: ");
-	if (retour == OK)
-		printf("-> OK");
-	else
-		printf("-> ERREUR");
+	printf("-> Retour (Copier) : ");
+	if (retour == OK) printf("-> OK");
+	else printf("-> ERREUR");
 	printf("\n");
 	
 	// CRÉER LE NÉGATIF
-	/*retour = pgm_creer_negatif(image1,lignes1, colonnes1, maxval);
+	retour = pgm_creer_negatif(image1,lignes1, colonnes1, maxval);
 	printf("-> Retour (Créer le négatif) : ");
-	if (retour == OK)
-		printf("-> OK");
-	else
-		printf("-> ERREUR");
-	printf("\n");*/
+	if (retour == OK) printf("-> OK");
+	else printf("-> ERREUR");
+	printf("\n");
 
 	// PIVOTER
-	//retour = pgm_pivoter90(image2, &lignes2, &colonnes2,0);
-	
-	
+	retour = pgm_pivoter90(image2, &lignes2, &colonnes2,0);
+	printf("-> Retour (Pivoter) : ");
+	if (retour == OK) printf("-> OK");
+	else printf("-> ERREUR");
+	printf("\n");
 	
 	// SONT IDENTIQUES ?
 	retour = pgm_sont_identiques(image1, lignes1, colonnes1, image2, lignes2, colonnes2);
-	
 	printf("-> Retour (identiques) : ");
-	if (retour == 0)
-		printf("-> INDENTIQUES");
-	else
-		printf("-> DIFFÉRENTES");
+	if (retour == 0) printf("-> INDENTIQUES");
+	else printf("-> DIFFÉRENTES");
 	printf("\n");
 	
 
@@ -110,6 +107,6 @@ int main()
                maxval, metadonnees);            
 
     printf("-> Fin!\n");
-
+*/
     return 0;
 }

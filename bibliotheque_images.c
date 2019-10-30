@@ -20,8 +20,17 @@ int pgm_lire(char nom_fichier[], int matrice[MAX_HAUTEUR][MAX_LARGEUR],
 	{
 		char temp[MAX_CHAINE];
 		fgets(temp, MAX_CHAINE,flot_entree); 
+		int nbMeta = 0;
 		if(temp[0] == '#') 
 		{
+			
+			for (int i=0 ; i < strlen(temp) ; i++)
+			{
+				if(temp[i] == ';') nbMeta++;
+			}
+			
+			if (nbMeta != 2) return -3;
+			
 			char *meta = strtok(temp+1,";");
 			strcpy(p_metadonnees->auteur,meta);
 			meta = strtok(NULL,";");
@@ -52,9 +61,7 @@ int pgm_lire(char nom_fichier[], int matrice[MAX_HAUTEUR][MAX_LARGEUR],
 				for(int j=0; j < *p_colonnes ; j++)
 				{
 					fscanf(flot_entree, "%i", &matrice[i][j]);
-					printf("%d ",matrice[i][j]);
 				}
-				printf("\n");
 			}
 		}	
 		else return -3;
@@ -65,7 +72,6 @@ int pgm_lire(char nom_fichier[], int matrice[MAX_HAUTEUR][MAX_LARGEUR],
 		return -1;
 	}
 	
-	
 	fclose(flot_entree);
     return OK;
 }
@@ -74,13 +80,16 @@ int pgm_ecrire(char nom_fichier[], int matrice[MAX_HAUTEUR][MAX_LARGEUR],
                int lignes, int colonnes, 
                int maxval, struct MetaData metadonnees)
 {
+
+	if(colonnes > MAX_LARGEUR || lignes > MAX_HAUTEUR) return -1;
+	
 	FILE *flot_sortie = fopen(nom_fichier, "w");
 	
 	if(flot_sortie != NULL)
 	{
 		if(strncmp(metadonnees.auteur,"",MAX_CHAINE) != 0) 
 		{
-			fprintf(flot_sortie, "# %s; %s; %s", metadonnees.auteur, metadonnees.dateCreation, metadonnees.lieuCreation);
+			fprintf(flot_sortie, "# %s; %s; %s\n", metadonnees.auteur, metadonnees.dateCreation, metadonnees.lieuCreation);
 		}
 		fprintf(flot_sortie, "P2\n%d %d\n%d\n",colonnes,lignes,maxval);
 		
@@ -115,7 +124,6 @@ int pgm_copier(int matrice1[MAX_HAUTEUR][MAX_LARGEUR], int lignes1, int colonnes
 			matrice2[i][j] = matrice1[i][j]; 
 		}
 	}
-	//Retourner -1 si il y a une erreur????
 	return 0; 
 }
 
@@ -223,6 +231,8 @@ int pgm_sont_identiques(int matrice1[MAX_HAUTEUR][MAX_LARGEUR], int lignes1, int
 
 int pgm_pivoter90(int matrice[MAX_HAUTEUR][MAX_LARGEUR], int *p_lignes, int *p_colonnes, int sens)
 {
+	if(sens !=0 && sens !=1) return -1;
+	
 	int matriceTemp[MAX_HAUTEUR][MAX_LARGEUR];
 	for(int i = 0; i < *p_lignes; i++)
 	{
@@ -249,3 +259,174 @@ int pgm_pivoter90(int matrice[MAX_HAUTEUR][MAX_LARGEUR], int *p_lignes, int *p_c
 	
 }
 	
+	
+	
+	
+int ppm_lire(char nom_fichier[], struct RGB matrice[MAX_HAUTEUR][MAX_LARGEUR],
+			 int *p_lignes, int *p_colonnes, int *p_maxval, struct MetaData *p_metadonnees)
+{
+	FILE *flot_entree = fopen(nom_fichier, "r");
+	
+	if(flot_entree != NULL)
+	{
+		char temp[MAX_CHAINE];
+		fgets(temp, MAX_CHAINE,flot_entree); 
+		int nbMeta = 0;
+		if(temp[0] == '#') 
+		{
+			
+			for (int i=0 ; i < strlen(temp) ; i++)
+			{
+				if(temp[i] == ';') nbMeta++;
+			}
+			
+			if (nbMeta != 2) return -3;
+			
+			char *meta = strtok(temp+1,";");
+			strcpy(p_metadonnees->auteur,meta);
+			meta = strtok(NULL,";");
+			strcpy(p_metadonnees->dateCreation, meta);
+			meta = strtok(NULL,";");
+			strcpy(p_metadonnees->lieuCreation,meta);
+			printf("auteur: %s\ndate: %s\nlieu: %s\n",p_metadonnees->auteur, p_metadonnees->dateCreation,p_metadonnees->lieuCreation);
+			
+			fscanf(flot_entree, "%s", temp);
+		} 
+		else
+		{
+			strcpy(p_metadonnees->auteur,"");
+			strcpy(p_metadonnees->dateCreation,"");
+			strcpy(p_metadonnees->lieuCreation,"");
+		}
+		
+		if(strncmp(temp,"P3",2) == 0)
+		{
+			fscanf(flot_entree, "%i", p_colonnes);
+			fscanf(flot_entree, "%i", p_lignes);
+			fscanf(flot_entree, "%i", p_maxval);
+			
+			if(*p_colonnes > MAX_LARGEUR || *p_lignes > MAX_HAUTEUR) return -2;
+			
+			for(int i=0; i < *p_lignes ; i++)
+			{
+				for(int j=0; j < *p_colonnes ; j++)
+				{
+					fscanf(flot_entree, "%i", &matrice[i][j].valeurR);
+					fscanf(flot_entree, "%i", &matrice[i][j].valeurG);
+					fscanf(flot_entree, "%i", &matrice[i][j].valeurB);
+				}
+			}
+		}	
+		else return -3;
+	}
+	else
+	{
+		printf("Erreur d'ouverture de fichier.\n");
+		return -1;
+	}
+	
+	fclose(flot_entree);
+    return OK;
+    
+    
+}
+
+int ppm_ecrire(char nom_fichier[], struct RGB matrice[MAX_HAUTEUR][MAX_LARGEUR],
+			   int lignes, int colonnes, int maxval, struct MetaData metadonnees)
+{
+	if(colonnes > MAX_LARGEUR || lignes > MAX_HAUTEUR) return -1;
+	
+	FILE *flot_sortie = fopen(nom_fichier, "w");
+	
+	if(flot_sortie != NULL)
+	{
+		if(strncmp(metadonnees.auteur,"",MAX_CHAINE) != 0) 
+		{
+			fprintf(flot_sortie, "# %s; %s; %s\n", metadonnees.auteur, metadonnees.dateCreation, metadonnees.lieuCreation);
+		}
+		fprintf(flot_sortie, "P3\n%d %d\n%d\n",colonnes,lignes,maxval);
+		
+		for(int i=0; i < lignes ; i++)
+		{
+			for(int j=0; j < colonnes ; j++)
+			{
+				fprintf(flot_sortie,"%d ", matrice[i][j].valeurR);
+				fprintf(flot_sortie,"%d ", matrice[i][j].valeurG);
+				fprintf(flot_sortie,"%d ", matrice[i][j].valeurB);
+			}
+			fprintf(flot_sortie, "\n");
+		}	
+	}
+	else
+	{
+		printf("Erreur d'ouverture de fichier.\n");
+	}
+	
+	fclose(flot_sortie);
+    return OK;
+}
+
+int ppm_copier(struct RGB matrice1[MAX_HAUTEUR][MAX_LARGEUR], int lignes1, int colonnes1,
+			   struct RGB matrice2[MAX_HAUTEUR][MAX_LARGEUR], int *p_lignes2, int *p_colonnes2)
+{
+	*p_lignes2 = lignes1;
+	*p_colonnes2 = colonnes1;
+	
+	for(int i = 0; i < lignes1; i++)
+	{
+		for(int j = 0; j < colonnes1; j++)
+		{
+			matrice2[i][j].valeurR = matrice1[i][j].valeurR;
+			matrice2[i][j].valeurG = matrice1[i][j].valeurG;
+			matrice2[i][j].valeurB = matrice1[i][j].valeurB;   
+		}
+	}
+	return 0; 
+}
+
+int ppm_sont_identiques(struct RGB matrice1[MAX_HAUTEUR][MAX_LARGEUR], int lignes1, int colonnes1,
+						struct RGB matrice2[MAX_HAUTEUR][MAX_LARGEUR], int lignes2, int colonnes2)
+{
+	if(lignes1 != lignes2 || colonnes1 != colonnes2) return 1;
+	
+	for(int i = 0; i < lignes1; i++)
+	{
+		for(int j = 0; j < colonnes1; j++)
+		{
+			if (matrice1[i][j].valeurR != matrice2[i][j].valeurR) return 1;
+			if (matrice1[i][j].valeurG != matrice2[i][j].valeurG) return 1;
+			if (matrice1[i][j].valeurB != matrice2[i][j].valeurB) return 1;
+		}
+	}
+	
+	return 0;
+}
+
+int ppm_pivoter90(struct RGB matrice[MAX_HAUTEUR][MAX_LARGEUR], int *p_lignes, int *p_colonnes, int sens)
+{
+	if(sens !=0 && sens !=1) return -1;
+	
+	struct RGB matriceTemp[MAX_HAUTEUR][MAX_LARGEUR];
+	for(int i = 0; i < *p_lignes; i++)
+	{
+		for(int j = 0; j < *p_colonnes; j++)
+		{
+			matriceTemp[i][j] = matrice[i][j];
+		}
+	}
+	
+	int temp = *p_colonnes;
+	*p_colonnes = *p_lignes;
+	*p_lignes = temp;
+	
+	for(int i = 0; i < *p_lignes; i++)
+	{
+		for(int j = 0; j < *p_colonnes; j++)
+		{
+			if(sens == 0) matrice[i][j] = matriceTemp[j][*p_lignes - 1 - i];
+			else  matrice[i][j] = matriceTemp[*p_colonnes -1 - j][i];
+		}
+	}
+	
+	return 0;
+}
